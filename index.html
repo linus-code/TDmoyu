@@ -5,9 +5,9 @@
     <title>摸鱼办</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/static/moyu.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/css/index-style.css">
-    <script src="/static/js/tool.js"></script>
+    <link rel="icon" href="./static/moyu.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./static/css/index-style.css">
+    <script src="./static/js/tool.js"></script>
     <link href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.13.18/katex.min.css" rel="stylesheet">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/avalon.js/2.2.7/avalon.min.js"></script>
@@ -89,7 +89,7 @@
     }
 
     $.ajax({
-        url: "data/holiday.json",
+        url: "./data/holiday.json",
         type: 'GET',
         datatype: 'JSON',
         success: function (req_data) {
