@@ -2,52 +2,20 @@
 <html>
 
 <head>
-    <title>摸鱼办公室</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./static/moyu.ico" type="image/x-icon">
-    <link rel="stylesheet" href="./static/css/index-style.css">
-    <script src="./static/js/tool.js"></script>
-    <link href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.13.18/katex.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>摸鱼小游戏合集</title>
+    <link rel="icon" href="/static/moyu.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/index-style.css">
     <link href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/avalon.js/2.2.7/avalon.min.js"></script>
 </head>
 
 <body for="html-export">
-<div class="mume markdown-preview " ms-controller="moyu">
-    <h1 align="center" ms-visible="!browser.versions.mobileWechat">摸鱼办公室</h1>
-    <p align="center">
-        <img src="./static/moyu.gif" alt="">
-    </p>
-    <center>
-        摸鱼办提醒您: 今天是 {{ @today }} {{ @week_name }}
-        <br><br>
-        <p>
-            你好，摸鱼人，工作再累，一定不要忘记摸鱼哦 ！<br>
-            有事没事起身去茶水间冲个咖啡，去廊道去天台走走，别老在工位上坐着。<br>
-            多喝点水，钱是老板的，但命是自己的 !
-        </p>
-
-        <p ms-for="(index,v) in @holiday">
-            🐟 距离 {{ v.name }} 放假还有 {{ @v.day_num }} 天
-        </p>
-
-        <p>
-            【友情提示】三甲医院 ICU 躺一天平均费用大概一万块。<br>
-            你晚一天进 ICU，就等于为你的家庭多赚一万块。少上班，多摸鱼。<br>
-            上班是帮老板赚钱，摸鱼是赚老板的钱！最后，祝愿天下所有摸鱼人，都能愉快的渡过每一天 !
-        </p>
-
-
-    </center>
-
-    <br><br>
-    <p align="right">摸鱼办 宣 </p>
-
+<div class="mume markdown-preview ">
     <div class="games" id="article-container">
-        <p><i class="fas fa-tags"></i> <span>小游戏专区</span> </p>
+        <p><i class="fas fa-tags"></i> <span>小游戏专区</span></p>
         <div class="tab-contents">
             <div class="tab-item-content">
                 <figure class="gallery-group">
@@ -162,85 +130,7 @@
     </div>
 </div>
 
-<center>
-    <!--    <a style="font-size: 14px;font-weight: 100;color: #aaa;" href="https://beian.miit.gov.cn/">备案信息</a>-->
-</center>
-
-<script>
-
-
-    let vm = avalon.define({
-        $id: "moyu",
-        holiday: [],
-        browser: {
-            versions: function () {
-                let u = navigator.userAgent, app = navigator.appVersion;
-                return {         //移动终端浏览器版本信息
-                    trident: u.indexOf('Trident') > -1, //IE内核
-                    presto: u.indexOf('Presto') > -1, //opera内核
-                    webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-                    mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
-                    iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
-                    iPad: u.indexOf('iPad') > -1, //是否iPad
-                    webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
-                    wechat: u.toLowerCase().match(/MicroMessenger/i) == "micromessenger", //是否微信
-                    mobileWechat: !!u.match(/AppleWebKit.*Mobile.*/) && u.toLowerCase().match(/MicroMessenger/i) == "micromessenger", //是否移动端微信
-                    weibo: u.toLowerCase().match(/WeiBo/i) == "weibo" //是否微博
-                };
-            }(),
-            language: (navigator.browserLanguage || navigator.language).toLowerCase()
-        }
-    })
-
-    vm.now = new Date();
-    vm.xq = vm.now.getDay(), h = vm.now.getHours(), m = vm.now.getMinutes(),
-        vm.sj = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
-    vm.week_name = toWeekName(vm.now.format("yyyy-MM-dd"));
-    vm.today = vm.now.format("yyyy") + "年" + vm.now.format("MM") + "月" + vm.now.format("dd") + "日  ";
-    vm.work_time = vm.xq >= 1 && vm.xq <= 5 && vm.sj >= '09:00' && vm.sj <= '18:00';
-
-
-    //计算剩余时长
-    let calc_date = function (datetime) {
-        let now = new Date();
-        let endtime = new Date(datetime);
-
-        // //赋值
-        let day = (endtime - now) / 1000 / 60 / 60 / 24;
-        let hour = parseFloat("0." + (day + "").split('.')[1]) * 24;
-        let minu = parseFloat("0." + (hour + "").split('.')[1]) * 60;
-        let sec = parseFloat("0." + (minu + "").split('.')[1].substring(0, 4)) * 60;
-
-        day = parseInt(day);
-        hour = parseInt(hour);
-        minu = parseInt(minu);
-        sec = parseInt(sec);
-
-        return day;
-
-    }
-
-    $.ajax({
-        url: "./data/holiday.json",
-        type: 'GET',
-        datatype: 'JSON',
-        success: function (req_data) {
-            console.log(req_data);
-            vm.holiday = req_data.data.map(function (_holiday) {
-                _holiday.day_num = calc_date(_holiday.datetime);
-                return _holiday;
-            });
-        },
-        error: function (err) {
-            $("h3").text("数据异常");
-            return;
-        }
-
-    });
-
-</script>
 </body>
+
 </html>
+
