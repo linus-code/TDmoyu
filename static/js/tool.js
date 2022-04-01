@@ -1,5 +1,5 @@
 Date.prototype.format = function (fmt) {
-    var o = {
+    let o = {
         "M+": this.getMonth() + 1,                 //月份
         "d+": this.getDate(),                    //日
         "h+": this.getHours(),                   //小时
@@ -11,7 +11,7 @@ Date.prototype.format = function (fmt) {
     if (/(y+)/.test(fmt)) {
         fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
     }
-    for (var k in o) {
+    for (let k in o) {
         if (new RegExp("(" + k + ")").test(fmt)) {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         }
@@ -21,8 +21,8 @@ Date.prototype.format = function (fmt) {
 
 //由星期的数字转换为星期的名称,date格式：2016-01-07，用"-"分割
 let toWeekName = function(date) {
-    var newDate = new Date(date.replace(/-/g, '/'));
-    var weekday = new Array(7);
+    let newDate = new Date(date.replace(/-/g, '/'));
+    let weekday = new Array(7);
     weekday[0] = "星期日";
     weekday[1] = "星期一";
     weekday[2] = "星期二";
@@ -41,7 +41,7 @@ let toChinesNum = (num) => {
     let getWan = (temp) => {
         let strArr = temp.toString().split("").reverse();
         let newNum = "";
-        for (var i = 0; i < strArr.length; i++) {
+        for (let i = 0; i < strArr.length; i++) {
             newNum = (i == 0 && strArr[i] == 0 ? "" : (i > 0 && strArr[i] == 0 && strArr[i - 1] == 0 ? "" : changeNum[strArr[i]] + (strArr[i] == 0 ? unit[0] : unit[i]))) + newNum;
         }
         return newNum;

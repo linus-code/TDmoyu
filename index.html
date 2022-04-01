@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>摸鱼办</title>
+    <title>摸鱼办公室</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./static/moyu.ico" type="image/x-icon">
@@ -16,7 +16,7 @@
 
 <body for="html-export">
 <div class="mume markdown-preview " ms-controller="moyu">
-    <h1 align="center">摸鱼办公室</h1>
+    <h1 align="center" ms-visible="!browser.versions.mobileWechat">摸鱼办公室</h1>
     <p align="center">
         <img src="./static/moyu.gif" alt="">
     </p>
@@ -29,11 +29,9 @@
             多喝点水，钱是老板的，但命是自己的 !
         </p>
 
-
         <p ms-for="(index,v) in @holiday">
             🐟 距离 {{ v.name }} 放假还有 {{ @v.day_num }} 天
         </p>
-
 
         <p>
             【友情提示】三甲医院 ICU 躺一天平均费用大概一万块。<br>
@@ -56,9 +54,30 @@
 <script>
 
 
-    var vm = avalon.define({
+    let vm = avalon.define({
         $id: "moyu",
-        holiday: []
+        holiday: [],
+        browser: {
+            versions: function () {
+                let u = navigator.userAgent, app = navigator.appVersion;
+                return {         //移动终端浏览器版本信息
+                    trident: u.indexOf('Trident') > -1, //IE内核
+                    presto: u.indexOf('Presto') > -1, //opera内核
+                    webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+                    iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                    iPad: u.indexOf('iPad') > -1, //是否iPad
+                    webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                    wechat: u.toLowerCase().match(/MicroMessenger/i) == "micromessenger", //是否微信
+                    mobileWechat: !!u.match(/AppleWebKit.*Mobile.*/) && u.toLowerCase().match(/MicroMessenger/i) == "micromessenger", //是否移动端微信
+                    weibo: u.toLowerCase().match(/WeiBo/i) == "weibo" //是否微博
+                };
+            }(),
+            language: (navigator.browserLanguage || navigator.language).toLowerCase()
+        }
     })
 
     vm.now = new Date();
@@ -69,15 +88,16 @@
     vm.work_time = vm.xq >= 1 && vm.xq <= 5 && vm.sj >= '09:00' && vm.sj <= '18:00';
 
 
-    function calc_date(datetime) {
-        var now = new Date();
-        var endtime = new Date(datetime);
+    //计算剩余时长
+    let calc_date = function (datetime) {
+        let now = new Date();
+        let endtime = new Date(datetime);
 
         // //赋值
-        var day = (endtime - now) / 1000 / 60 / 60 / 24;
-        var hour = parseFloat("0." + (day + "").split('.')[1]) * 24;
-        var minu = parseFloat("0." + (hour + "").split('.')[1]) * 60;
-        var sec = parseFloat("0." + (minu + "").split('.')[1].substring(0, 4)) * 60;
+        let day = (endtime - now) / 1000 / 60 / 60 / 24;
+        let hour = parseFloat("0." + (day + "").split('.')[1]) * 24;
+        let minu = parseFloat("0." + (hour + "").split('.')[1]) * 60;
+        let sec = parseFloat("0." + (minu + "").split('.')[1].substring(0, 4)) * 60;
 
         day = parseInt(day);
         hour = parseInt(hour);
@@ -108,5 +128,4 @@
 
 </script>
 </body>
-
 </html>
