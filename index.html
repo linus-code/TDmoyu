@@ -35,7 +35,8 @@
         </p>
 
         <p ms-for="(index,v) in @holiday">
-            🐟 距离 {{ v.name }} 放假还有 {{ @v.day_num }} 天
+            🐟 距离 {{ v.name }} 放假还有<span ms-if="@v.date_num.day>0"> {{ @v.date_num.day }} 天</span><span
+                ms-if="@v.date_num.day == 0"> {{ @v.date_num.hour-6 }} 小时 {{ @v.date_num.minus }} 分 </span>
         </p>
 
         <p>
@@ -215,16 +216,16 @@
         // //赋值
         let day = (endtime - now) / 1000 / 60 / 60 / 24;
         let hour = parseFloat("0." + (day + "").split('.')[1]) * 24;
-        let minu = parseFloat("0." + (hour + "").split('.')[1]) * 60;
-        let sec = parseFloat("0." + (minu + "").split('.')[1].substring(0, 4)) * 60;
+        let minus = parseFloat("0." + (hour + "").split('.')[1]) * 60;
+        let sec = parseFloat("0." + (minus + "").split('.')[1].substring(0, 4)) * 60;
 
-        day = parseInt(day) + 1;
-        hour = parseInt(hour);
-        minu = parseInt(minu);
-        sec = parseInt(sec);
-
-        return day;
-
+        let date_num = {
+            day: Math.floor(day),
+            hour: parseInt(hour),
+            minus: parseInt(minus),
+            sec: parseInt(sec)
+        };
+        return date_num;
     }
 
     $.ajax({
@@ -233,9 +234,9 @@
         datatype: 'JSON',
         success: function (req_data) {
             console.log(req_data);
-            vm.holiday = req_data.data.map(function (_holiday) {
-                _holiday.day_num = calc_date(_holiday.holidaytime);
-                return _holiday;
+            vm.holiday = req_data.data.filter(function (_holiday) {
+                _holiday.date_num = calc_date(_holiday.holidaytime);
+                return _holiday.date_num.day >= 0;
             });
         },
         error: function (err) {
