@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./static/moyu.ico" type="image/x-icon">
-    <meta name="keywords" content="摸鱼办公室" />
-    <meta name="description" content="你好，摸鱼人，工作再累，一定不要忘记摸鱼哦 ！" />
+    <meta name="keywords" content="摸鱼办公室"/>
+    <meta name="description" content="你好，摸鱼人，工作再累，一定不要忘记摸鱼哦 ！"/>
     <link rel="stylesheet" href="./static/css/index-style.css">
     <link rel="stylesheet" href="/TDmoyu/static/css/index-style.css">
     <script src="./static/js/tool.js"></script>
@@ -51,7 +51,7 @@
     <p align="right">摸鱼办 宣 </p>
 
     <div class="games" id="article-container">
-        <p><i class="fas fa-tags"></i> <span>小游戏专区</span> </p>
+        <p><i class="fas fa-tags"></i> <span>小游戏专区</span></p>
         <div class="tab-contents">
             <div class="tab-item-content">
                 <figure class="gallery-group">
@@ -218,7 +218,7 @@
         let minu = parseFloat("0." + (hour + "").split('.')[1]) * 60;
         let sec = parseFloat("0." + (minu + "").split('.')[1].substring(0, 4)) * 60;
 
-        day = parseInt(day);
+        day = parseInt(day) + 1;
         hour = parseInt(hour);
         minu = parseInt(minu);
         sec = parseInt(sec);
@@ -228,13 +228,13 @@
     }
 
     $.ajax({
-        url: "./data/holiday.json",
+        url: "./data/holiday.json?t=" + vm.now.getTime(),
         type: 'GET',
         datatype: 'JSON',
         success: function (req_data) {
             console.log(req_data);
             vm.holiday = req_data.data.map(function (_holiday) {
-                _holiday.day_num = calc_date(_holiday.datetime);
+                _holiday.day_num = calc_date(_holiday.holidaytime);
                 return _holiday;
             });
         },
