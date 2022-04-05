@@ -20,7 +20,7 @@ Date.prototype.format = function (fmt) {
 };
 
 //由星期的数字转换为星期的名称,date格式：2016-01-07，用"-"分割
-let toWeekName = function(date) {
+let toWeekName = function (date) {
     let newDate = new Date(date.replace(/-/g, '/'));
     let weekday = new Array(7);
     weekday[0] = "星期日";
@@ -31,8 +31,12 @@ let toWeekName = function(date) {
     weekday[5] = "星期五";
     weekday[6] = "星期六";
     return weekday[newDate.getDay()];
-}
+};
 
+let isWeekdays = function (holidays) {
+    let now = new Date();
+    return [1, 2, 3, 4, 5].indexOf(now.getUTCDay()) > -1 && holidays[now.format("yyyy")][now.format("MM") + now.format("dd")] !== 0
+};
 
 let toChinesNum = (num) => {
     let changeNum = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
@@ -48,6 +52,8 @@ let toChinesNum = (num) => {
     }
     let overWan = Math.floor(num / 10000);
     let noWan = num % 10000;
-    if (noWan.toString().length < 4) {　　　　　　noWan = "0" + noWan;　　　 }
+    if (noWan.toString().length < 4) {
+        noWan = "0" + noWan;
+    }
     return overWan ? getWan(overWan) + "万" + getWan(noWan) : getWan(num);
-}
+};
