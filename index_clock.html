@@ -203,7 +203,7 @@
 
     async function dateFunc(data, day, hour, minu, sec) {
         window.clearInterval(date_interval);
-        $("#next_date").text(['距离', data.name, '还有 ', day, '天 ', hour, ' 小时 ', minu, ' 分 '].join(''));
+        // $("#next_date").text(['距离', data.name, '还有 ', day, '天 ', hour, ' 小时 ', minu, ' 分 '].join(''));
         date_interval = setInterval(() => {
             calc_date(data);
         }, 1000);
@@ -238,7 +238,7 @@
         success: function (req_data) {
             console.log(req_data);
             var data = req_data.data[0];
-            calc_date(data);
+            // calc_date(data);
         },
         error: function (err) {
             $("h3").text("数据异常");
